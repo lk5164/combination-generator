@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-between">
+  <div class="row">
+    <div class="col-xs-12 col-md-12 form-group">
+      <form #f="ngForm" (ngSubmit)="onExecute(f)">
+        <div class="col-md-3" style="text-align:left">
+          <label for="phoneNumber">Phone Number: </label>
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control"
+                    id="phoneNumber" name="phoneNumber"
+                 ngModel maxlength="10"
+                    required
+                 [pattern]="'^[0-9]{7,10}$'"
+          />
+        </div>
+        <div class="col-md-3">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="!f.valid || isLoading"
+            style="width: 100px"
+          >
+            Generate
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row" style="text-align: center">
+    <img src="assets/img/dial_pad.png">
+  </div>
+  <div class="row">
+    <span>Total number of combinations is: </span>{{theTotalElements}}
+  </div>
+  <div class="row">
+    <table class="table">
+
+      <thead class="thead-dark">
+      <tr>
+        <th>&#35;</th>
+        <th>Text</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let item of combinations">
+        <td class="align-middle">{{ item.id}}</td>
+        <td class="align-middle">{{ item.text}}</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="footer-pagination">
+    <div class="row">
+      <div class="col-md-12">
+          <div class="col-md-9">
+
+            <ngb-pagination [(page)]="thePageNumber"
+                            [pageSize]="thePageSize"
+                            [collectionSize]="theTotalElements"
+                            [maxSize]="5"
+                            [boundaryLinks]="true"
+                            (pageChange)="listItems()">
+
+            </ngb-pagination>
+
+          </div>
+
+          <div class="col-md-3 mt-2" style="text-align: right;">
+            <span class="mr-2">Page Size</span>
+
+            <select (change)="updatePageSize($event.target.value)">
+              <option>2</option>
+              <option selected="true">5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+            </select>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
